@@ -1,4 +1,3 @@
-import { Title } from "./components";
 import { SignupForm } from "./components/SignupForm";
 
 /**
@@ -6,11 +5,8 @@ import { SignupForm } from "./components/SignupForm";
  */
 export default function Home() {
   return (
-    <>
-      <Title>회원가입</Title>
-      <main>
-        <SignupForm />
-      </main>
-    </>
+    <main>
+      <SignupForm />
+    </main>
   );
 }

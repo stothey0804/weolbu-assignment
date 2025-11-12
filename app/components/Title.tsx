@@ -4,8 +4,8 @@ export const Title = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <h1 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-4">
+    <header className="scroll-m-20 text-2xl font-semibold tracking-tight mb-4">
       {children}
-    </h1>
+    </header>
   );
 };
