@@ -16,3 +16,5 @@ export interface ClassListResponse {
 }
 
 export type ClassListData = Array<ClassData> | [];
+
+export type SortType = "id_desc" | "capacity_desc" | "rate_desc";

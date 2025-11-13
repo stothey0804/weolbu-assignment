@@ -16,3 +16,7 @@ export const QUERY_KEY_GET_CLASS = "get_class";
 
 export const DATA_KEY_USER_NAME = "user_name";
 export const DATA_KEY_USER_TYPE = "user_type";
+
+export const SORT_TYPE_ID_DESC = "id_desc";
+export const SORT_TYPE_CAPACITY_DESC = "capacity_desc";
+export const SORT_TYPE_RATE_DESC = "rate_desc";
