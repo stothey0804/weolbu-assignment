@@ -2,28 +2,29 @@
 
 import { useState, useMemo } from "react";
 import { Card } from "@/components/ui/card";
-import {
-  ClassFilter,
-  ClassList,
-  ClassItem,
-  Buttons,
-} from "@/components/class";
+import { ClassFilter, ClassList, ClassItem, Buttons } from "@/components/class";
 
 import { useGetClassData } from "@/lib/queries";
-import { useIntersectionObserver } from "@/lib/hooks";
+import { useIntersectionObserver, useClassSelection } from "@/lib/hooks";
 import { Spinner } from "@/components/ui/spinner";
 import { CLASS_PER_PAGE, SORT_TYPE_ID_DESC } from "@/lib/constants";
 import { SortType } from "@/lib/types";
 import { sortDataList } from "@/lib/utils";
+import { TotalSection } from "@/components/class/TotalSection";
 
 /**
  * 강의 목록 클라이언트 컴포넌트
  */
 export function ClassPage() {
   const [sortBy, setSortBy] = useState<SortType>(SORT_TYPE_ID_DESC);
+
   const [displayCount, setDisplayCount] = useState(CLASS_PER_PAGE);
 
   const { data, isLoading } = useGetClassData();
+
+  // 강의 선택 hook
+  const { selectedList, isSelected, toggleSelection, clearSelection } =
+    useClassSelection();
 
   /** 정렬된 전체 데이터 리스트 */
   const sortedData = useMemo(() => {
@@ -34,6 +35,18 @@ export function ClassPage() {
   const displayedData = useMemo(() => {
     return sortedData.slice(0, displayCount);
   }, [sortedData, displayCount]);
+
+  /** 총 선택 금액 계산 */
+  const totalSellingPrice = useMemo(() => {
+    return selectedList
+      .map((item) => item.sellingPrice)
+      .reduce((acc, curr) => acc + curr, 0);
+  }, [selectedList]);
+
+  /** 총 선택 강의 개수 */
+  const totalAmount = useMemo(() => {
+    return selectedList.length;
+  }, [selectedList]);
 
   const hasNextPage = displayCount < sortedData.length;
 
@@ -64,14 +77,26 @@ export function ClassPage() {
         <ClassList>
           {displayedData.length &&
             displayedData.map((classData) => (
-              <ClassItem key={`class-item-${classData.id}`} data={classData} />
+              <ClassItem
+                key={`class-item-${classData.id}`}
+                data={classData}
+                checked={isSelected(classData.id!)}
+                onToggle={() => toggleSelection(classData)}
+              />
             ))}
           {/* 무한 스크롤 트리거 */}
           <div ref={targetRef} className="h-1 flex items-center justify-center">
             {hasNextPage && <Spinner />}
           </div>
         </ClassList>
-        <Buttons />
+        <TotalSection
+          totalAmount={totalAmount}
+          totalSellingPrice={totalSellingPrice}
+        />
+        <Buttons
+          selectedClassList={selectedList}
+          onClearSelection={clearSelection}
+        />
       </Card>
     </main>
   );

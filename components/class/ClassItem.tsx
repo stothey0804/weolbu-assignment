@@ -6,7 +6,13 @@ import { ClassData } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { formatPrice } from "@/lib/utils";
 
-export function ClassItem({ data }: { data: ClassData }) {
+interface ClassItemProps {
+  data: ClassData;
+  checked?: boolean;
+  onToggle?: () => void;
+}
+
+export function ClassItem({ data, checked, onToggle }: ClassItemProps) {
   const { id, title, capacity, instructor, applicants, sellingPrice } = data;
 
   return (
@@ -15,7 +21,10 @@ export function ClassItem({ data }: { data: ClassData }) {
         <Checkbox
           id={`class-checkbox-${id}`}
           data-id={id}
+          checked={checked}
           className="data-[state=checked]:border-gray-600 data-[state=checked]:bg-gray-600 data-[state=checked]:text-white dark:data-[state=checked]:border-gray-700 dark:data-[state=checked]:bg-gray-700"
+          onCheckedChange={onToggle}
+          disabled={applicants >= capacity}
         />
         <div className="flex flex-col w-full gap-2">
           <div className="flex justify-between">

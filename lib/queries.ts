@@ -9,7 +9,11 @@ import {
   useMutation,
 } from "@tanstack/react-query";
 
-import { QUERY_KEY_GET_CLASS } from "./constants";
+import {
+  MUTATE_KEY_ADD_CLASS,
+  MUTATE_KEY_APPLY_CLASS,
+  QUERY_KEY_GET_CLASS,
+} from "./constants";
 import { ClassData, ClassListResponse } from "./types";
 
 export const queryClient = new QueryClient();
@@ -51,7 +55,7 @@ export const useAddClassData = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationKey: [],
+    mutationKey: [MUTATE_KEY_ADD_CLASS],
     mutationFn: (param: ClassData) => addClassData(param),
     onSuccess: () => {
       router.push("/class");
@@ -60,6 +64,25 @@ export const useAddClassData = () => {
     onError: (error) => {
       console.error(error);
       alert("에러가 발생했습니다. 다시 시도해주세요.");
+    },
+  });
+};
+
+/**
+ * react query hook
+ * - 강의 신청 (applicants 증가)
+ */
+export const useIncreaseApplicant = () => {
+  return useMutation({
+    mutationKey: [MUTATE_KEY_APPLY_CLASS],
+    mutationFn: (ids: Array<number>) => increaseApplicant(ids),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_GET_CLASS] });
+      alert("수강 신청이 완료되었습니다.");
+    },
+    onError: (error) => {
+      console.error(error);
+      alert("수강 신청 중 에러가 발생했습니다. 다시 시도해주세요.");
     },
   });
 };
@@ -111,5 +134,28 @@ const addClassData = async (data: ClassData) => {
     await axios.post("/class", data);
   } catch (error) {
     console.error("강의 등록 실패:", error);
+  }
+};
+
+/**
+ * 강의 신청 시 인원 추가 처리
+ */
+const increaseApplicant = async (ids: Array<number>) => {
+  try {
+    const updatePromises = ids.map(async (id) => {
+      const { data: classData } = await axios.get<ClassData>(`/class/${id}`);
+
+      // capacity를 초과하지 않는 경우에만 증가
+      if (classData.applicants < classData.capacity) {
+        await axios.patch(`/class/${id}`, {
+          applicants: classData.applicants + 1,
+        });
+      }
+    });
+
+    await Promise.all(updatePromises);
+  } catch (error) {
+    console.error("강의 신청 실패:", error);
+    throw error;
   }
 };

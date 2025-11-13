@@ -18,3 +18,10 @@ export interface ClassListResponse {
 export type ClassListData = Array<ClassData> | [];
 
 export type SortType = "id_desc" | "capacity_desc" | "rate_desc";
+
+export interface SelectedClass {
+  id: number;
+  capacity: number;
+  applicants: number;
+  sellingPrice: number;
+}

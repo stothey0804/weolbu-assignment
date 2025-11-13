@@ -13,6 +13,8 @@ export const INPUT_CLASS_CAPACITY_ID = "inputClassCapacity";
 export const INPUT_CLASS_PRICE_ID = "inputClassPrice";
 
 export const QUERY_KEY_GET_CLASS = "get_class";
+export const MUTATE_KEY_ADD_CLASS = "add_class";
+export const MUTATE_KEY_APPLY_CLASS = "apply_class";
 
 export const DATA_KEY_USER_NAME = "user_name";
 export const DATA_KEY_USER_TYPE = "user_type";
