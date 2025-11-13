@@ -7,3 +7,5 @@ export const INPUT_PHONE_ID = "inputPhone";
 export const INPUT_PASSWORD_ID = "inputPassword";
 export const INPUT_USER_TYPE_INSTRUCTOR_ID = "inputInstructor";
 export const INPUT_USER_TYPE_LEARNER_ID = "inputLearner";
+
+export const QUERY_KEY_GET_CLASS = "get_class";
