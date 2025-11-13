@@ -1,3 +1,12 @@
+import { AddClassForm } from "@/app/components/AddClassFrom";
+
+/**
+ * /class/open 페이지 - 강의등록
+ */
 export default function Page() {
-  return <h1>Hello Next.js!</h1>;
+  return (
+    <main>
+      <AddClassForm />
+    </main>
+  );
 }

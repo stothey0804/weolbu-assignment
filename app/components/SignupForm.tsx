@@ -30,6 +30,7 @@ import { isAvailablePassword } from "@/lib/validation";
  */
 export function SignupForm() {
   const [isInvalidPassword, setIsInvalidPassword] = useState(false);
+
   const router = useRouter();
 
   /**
@@ -87,7 +88,7 @@ export function SignupForm() {
             <Input
               id={INPUT_PHONE_ID}
               name="phone"
-              type="phone"
+              type="tel"
               placeholder="010-1234-5678"
               required
             ></Input>
