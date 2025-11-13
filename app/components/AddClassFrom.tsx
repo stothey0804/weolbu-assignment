@@ -1,7 +1,6 @@
 "use client";
 
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 
 import { Card } from "@/components/ui/card";
 import { Field, FieldLabel, FieldSet } from "@/components/ui/field";
@@ -14,30 +13,33 @@ import {
   DATA_KEY_USER_NAME,
 } from "@/lib/constants";
 
+import { useAddClassData } from "@/lib/queries";
+
 /**
  * 강의 등록을 위한 Form 클라이언트 컴포넌트
  */
 export function AddClassForm() {
-  const router = useRouter();
+  const { mutate, isPending } = useAddClassData();
 
   /**
    * 강의등록 핸들러
    */
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
 
-    const data = {
-      title: formData.get("title"),
-      capacity: formData.get("capacity"),
-      sellingPrice: formData.get("sellingPrice"),
-    };
+    const formData = new FormData(e.currentTarget);
 
     const userName = Cookies.get(DATA_KEY_USER_NAME);
 
-    console.log(data, userName);
-    // TODO: json-server 데이터 등록
-    // router.push("/class");
+    const newClass = {
+      title: formData.get("title") as string,
+      capacity: Number(formData.get("capacity")),
+      sellingPrice: Number(formData.get("sellingPrice")),
+      instructor: userName || "instructor",
+      applicants: 0,
+    };
+
+    mutate(newClass);
   };
 
   return (
@@ -74,7 +76,9 @@ export function AddClassForm() {
             />
           </Field>
           <Field>
-            <Button type="submit">강의등록</Button>
+            <Button type="submit" disabled={isPending}>
+              강의등록
+            </Button>
           </Field>
         </FieldSet>
       </form>

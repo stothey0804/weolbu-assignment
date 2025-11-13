@@ -1,7 +1,7 @@
 export type userType = "instructor" | "learner";
 
 export interface ClassData {
-  id: number;
+  id?: number;
   title: string;
   capacity: number;
   applicants: number;
