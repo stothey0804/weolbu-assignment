@@ -25,7 +25,7 @@
 
 | 1depth                                                                                                                                | 2depth                                                                                                                                | 3depth                                                                                                                                |
 | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| <img width="371" height="662" alt="회원가입" src="https://github.com/user-attachments/assets/acc98596-6b84-47e5-8ea6-fd6b56e6e73e" /> | <img width="371" height="662" alt="강의목록" src="https://github.com/user-attachments/assets/deab57a7-706f-410b-919f-5d31e48a7b57" /> | <img width="371" height="662" alt="수강신청" src="https://github.com/user-attachments/assets/15ac62b3-0453-4f59-80dc-c13d7545a1df" /> |
+| <img width="371" height="662" alt="회원가입" src="https://github.com/user-attachments/assets/2c39f661-2be2-42a4-a23c-931156053be7" /> | <img width="371" height="662" alt="강의목록" src="https://github.com/user-attachments/assets/020ba75e-b62e-4e51-a69d-eedbc3dba1f1" /> | <img width="371" height="662" alt="수강신청" src="https://github.com/user-attachments/assets/15ac62b3-0453-4f59-80dc-c13d7545a1df" /> |
 | path: /                                                                                                                               | path: /class                                                                                                                          | path: /class/open                                                                                                                     |
 
 ### 1. 회원가입
@@ -55,7 +55,7 @@
 ## 📁 프로젝트 구조
 
 ```
-  weolbu-assignment/
+  class-app/
   ├── app/
   │   ├── class/            # 강의 목록 페이지
   │   │   └── open/         # 강의 등록 페이지
